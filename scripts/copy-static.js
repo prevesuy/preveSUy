@@ -1,12 +1,13 @@
 /* Ensambla la salida estática para Vercel en out/.
    Solo se copia lo que debe ser público (sitio + panel + assets).
    El backend vive en /api (función serverless) y no se expone.
-   JS y CSS se minifican con esbuild (ofuscación: sin comentarios,
-   código compactado) — el código fuente legible queda en el repo. */
+   JS y CSS se minifican con terser/clean-css (JS puro: sin binarios
+   ni postinstall, compatible con pnpm estricto en CI). */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { transformSync } from 'esbuild';
+import { minify } from 'terser';
+import CleanCSS from 'clean-css';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'out');
@@ -28,19 +29,24 @@ const walk = (dir, out = []) => {
   return out;
 };
 
-let minified = 0;
+const cssMin = new CleanCSS({ level: 2 });
+let done = 0;
 for (const file of walk(OUT)) {
   const ext = path.extname(file).toLowerCase();
-  if (ext !== '.js' && ext !== '.css') continue;
   const code = fs.readFileSync(file, 'utf8');
-  const { code: min } = transformSync(code, {
-    loader: ext === '.js' ? 'js' : 'css',
-    minify: true,
-    target: 'es2020',
-    legalComments: 'none',
-  });
-  fs.writeFileSync(file, min);
-  minified++;
+  if (ext === '.js') {
+    const { code: min } = await minify(code, {
+      compress: { passes: 2, drop_console: false },
+      mangle: true,
+      format: { comments: false },
+    });
+    fs.writeFileSync(file, min);
+    done++;
+  } else if (ext === '.css') {
+    const { styles } = cssMin.minify(code);
+    fs.writeFileSync(file, styles);
+    done++;
+  }
 }
 
-console.log(`[build] out/ listo: ${fs.readdirSync(OUT).join(', ')} · ${minified} archivos minificados`);
+console.log(`[build] out/ listo: ${fs.readdirSync(OUT).join(', ')} · ${done} archivos minificados`);

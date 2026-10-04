@@ -16,12 +16,8 @@
     "postgres": "^3.4.5"
   },
   "devDependencies": {
-    "esbuild": "^0.28.2",
-    "pdfkit": "^0.20.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
+    "clean-css": "^5.3.3",
+    "pdfkit": "^0.20.2",
+    "terser": "^5.51.2"
   }
 }
