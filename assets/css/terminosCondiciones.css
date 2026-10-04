@@ -1,0 +1,203 @@
+:root {
+  --p1: #FA9058;
+  --p2: #FECC64;
+  --p3: #FCEABC;
+  --p4: #FFF6E8;
+  --sky-1: #B5D8FF;
+  --sky-2: #95CAFC;
+  --ink: #1d2d3b;
+  --muted: #4f6477;
+  --white: #ffffff;
+  --panel: #f7fbff;
+  --line: rgba(149, 202, 252, 0.2);
+  --shadow: 0 18px 34px rgba(28, 55, 77, 0.08);
+  --radius: 22px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg, #fffaf0 0%, #edf8fd 100%);
+  color: var(--ink);
+  line-height: 1.7;
+}
+a { text-decoration: none; color: inherit; }
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 246, 232, 0.92);
+  border-bottom: 1px solid rgba(149, 202, 252, 0.28);
+  box-shadow: 0 6px 18px rgba(28, 55, 77, 0.05);
+}
+
+.header-inner {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  font-size: 1.08rem;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--sky-2), var(--sky-1));
+  color: var(--white);
+  font-weight: 700;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.site-nav a {
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: rgba(255,255,255,0.3);
+  border: 1px solid rgba(149, 202, 252, 0.18);
+  transition: 0.2s ease;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+  background: linear-gradient(135deg, var(--sky-2), var(--sky-1));
+  color: var(--white);
+  box-shadow: 0 10px 22px rgba(149, 202, 252, 0.2);
+}
+
+.nav-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(149, 202, 252, 0.2);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: 5px auto;
+  background: var(--ink);
+  border-radius: 10px;
+}
+
+.page-shell {
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 38px 0 70px;
+}
+
+.legal-card {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(149, 202, 252, 0.22);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+.lead {
+  background: linear-gradient(135deg, rgba(254, 204, 100, 0.7), rgba(181, 216, 255, 0.4));
+  border: 1px solid rgba(149, 202, 252, 0.18);
+  border-radius: 18px;
+  padding: 20px 18px;
+  margin-bottom: 20px;
+  color: var(--muted);
+}
+
+.lead h2 {
+  margin: 0 0 8px;
+  color: var(--ink);
+  font-size: 1.35rem;
+}
+
+.section {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(149, 202, 252, 0.18);
+}
+
+.section:last-child {
+  border-bottom: 0;
+}
+
+.section h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+}
+
+.section p,
+.section li {
+  color: var(--muted);
+}
+
+.section ul {
+  margin: 12px 0 0 18px;
+  padding: 0;
+}
+
+.section-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sky-2), var(--sky-1));
+  color: var(--white);
+  font-weight: 800;
+  margin-right: 10px;
+  font-size: 0.8rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 860px) {
+  .header-inner { position: relative; }
+  .nav-toggle { display: block; }
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    padding: 12px;
+    background: rgba(255,255,255,0.96);
+    border: 1px solid rgba(149, 202, 252, 0.2);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+  .site-nav.open {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

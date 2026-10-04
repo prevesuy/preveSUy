@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PREVESUY | Novedades</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../assets/img/logo.png">
+  <link rel="stylesheet" href="../assets/css/global.css">
+</head>
+<body data-page="novedades">
+  <div class="topbar">
+    <span class="slogan" role="banner" data-pv-key="site.slogan">Pedir ayuda no está mal</span>
+    <div class="a11y">
+      <button id="btnFontMinus" type="button" aria-label="Reducir tamaño de letra"><span class="material-symbols-rounded" aria-hidden="true">text_decrease</span></button>
+      <button id="btnFontPlus" type="button" aria-label="Aumentar tamaño de letra"><span class="material-symbols-rounded" aria-hidden="true">text_increase</span></button>
+      <button id="btnContrast" type="button" aria-pressed="false" aria-label="Activar alto contraste"><span class="material-symbols-rounded" aria-hidden="true">contrast</span></button>
+    </div>
+  </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="brand"><img class="brand-logo" src="../assets/img/logo.png" alt="Logo de PreveSUy"><span class="brand-name">PreveSUy</span></a>
+      <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"><span class="material-symbols-rounded" aria-hidden="true">menu</span></button>
+      <nav class="site-nav">
+        <a href="../index.html">Inicio</a>
+        <a href="herramientas.html">Herramientas</a>
+        <a href="novedades.html">Novedades</a>
+        <a href="soporteAyuda.html">Apoyo</a>
+        <a href="contactos.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <header class="page-hero">
+      <h1 data-pv-key="news.hero.title">Lorem ipsum dolor</h1>
+      <p data-pv-key="news.hero.sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </header>
+
+    <div class="toolbar">
+      <input type="search" id="newsSearch" placeholder="Buscar..." aria-label="Buscar novedades">
+      <div class="chip-row" id="chipsTipo"></div>
+    </div>
+
+    <section class="cards-grid" id="newsList"></section>
+  </main>
+
+  <footer class="site-footer">
+    <span data-pv-key="site.footer.left">Lorem ipsum dolor sit amet.</span>
+    <span><a href="sobreNosotros.html">Sobre nosotros</a> · <a href="terminosCondiciones.html">Términos y privacidad</a></span>
+  </footer>
+
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/novedades.js"></script>
+</body>
+</html>

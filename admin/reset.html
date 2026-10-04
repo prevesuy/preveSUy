@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PREVESUY | Restablecer contraseña</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/assets/img/logo.png">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="gate-body">
+  <main class="gate-card">
+    <div class="brand center"><img class="brand-logo" src="/assets/img/logo.png" alt="Logo de PreveSUy"><span class="brand-name">PreveSUy</span></div>
+    <h1>Restablecer contraseña</h1>
+    <form id="resetForm" novalidate>
+      <label>Nueva contraseña (mín. 8)
+        <input type="password" id="rPass" autocomplete="new-password" required>
+      </label>
+      <span class="field-error" data-for="rPass" role="alert"></span>
+      <label>Repetir contraseña
+        <input type="password" id="rPass2" autocomplete="new-password" required>
+      </label>
+      <span class="field-error" data-for="rPass2" role="alert"></span>
+      <p class="form-error" id="resetError" role="alert" hidden></p>
+      <p class="form-note" id="resetOk"></p>
+      <button type="submit" class="btn primary block">Guardar contraseña</button>
+      <a href="index.html" class="btn link block">Volver al inicio de sesión</a>
+    </form>
+  </main>
+  <script src="reset.js"></script>
+</body>
+</html>

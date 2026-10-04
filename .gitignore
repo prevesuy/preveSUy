@@ -1,0 +1,16 @@
+node_modules/
+server/data/
+uploads/
+out/
+.vercel/
+.env
+.env.*
+!.env.example
+*.log
+
+# archivos locales (no publicar)
+AGENTS.md
+DEPLOY.md
+docs/
+TESTING/
+scripts/generate-docs.js

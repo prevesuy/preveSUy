@@ -1,0 +1,95 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PREVESUY | Apoyo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../assets/img/logo.png">
+  <link rel="stylesheet" href="../assets/css/global.css">
+</head>
+<body data-page="soporte">
+  <div class="topbar">
+    <span class="slogan" role="banner" data-pv-key="site.slogan">Pedir ayuda no está mal</span>
+    <div class="a11y">
+      <button id="btnFontMinus" type="button" aria-label="Reducir tamaño de letra"><span class="material-symbols-rounded" aria-hidden="true">text_decrease</span></button>
+      <button id="btnFontPlus" type="button" aria-label="Aumentar tamaño de letra"><span class="material-symbols-rounded" aria-hidden="true">text_increase</span></button>
+      <button id="btnContrast" type="button" aria-pressed="false" aria-label="Activar alto contraste"><span class="material-symbols-rounded" aria-hidden="true">contrast</span></button>
+    </div>
+  </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="brand"><img class="brand-logo" src="../assets/img/logo.png" alt="Logo de PreveSUy"><span class="brand-name">PreveSUy</span></a>
+      <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"><span class="material-symbols-rounded" aria-hidden="true">menu</span></button>
+      <nav class="site-nav">
+        <a href="../index.html">Inicio</a>
+        <a href="herramientas.html">Herramientas</a>
+        <a href="novedades.html">Novedades</a>
+        <a href="soporteAyuda.html">Apoyo</a>
+        <a href="contactos.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-hero">
+      <span class="eyebrow" data-pv-key="support.hero.eyebrow">Lorem ipsum</span>
+      <h1 data-pv-key="support.hero.title">Lorem ipsum dolor sit amet</h1>
+      <p data-pv-key="support.hero.sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </section>
+
+    <section class="contact-grid">
+      <article class="panel">
+        <h2 data-pv-key="support.channels.title">Lorem ipsum</h2>
+        <div class="support-cards">
+          <div class="center-card">
+            <h3 data-pv-key="support.line1.title">Lorem ipsum</h3>
+            <a href="tel:08000777" class="center-phone">0800 0777</a>
+            <small data-pv-key="support.line1.desc">Lorem ipsum dolor</small>
+          </div>
+          <div class="center-card">
+            <h3 data-pv-key="support.line2.title">Lorem ipsum</h3>
+            <a href="tel:08000767" class="center-phone">0800 0767</a>
+            <small data-pv-key="support.line2.desc">Lorem ipsum dolor</small>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel breath-box">
+        <h2 data-pv-key="support.breath.title">Lorem ipsum</h2>
+        <p class="muted" data-pv-key="support.breath.sub">Lorem ipsum dolor sit amet.</p>
+        <div class="breath-circle" id="breathCircle"><span id="breathText">Listo</span></div>
+        <div class="row">
+          <button type="button" class="btn btn-primary" id="breathStart">Iniciar</button>
+          <button type="button" class="btn btn-secondary" id="breathStop">Detener</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel" id="ejercicios" style="margin-top:22px">
+      <h2 data-pv-key="support.ex.title">Lorem ipsum</h2>
+      <p class="muted" data-pv-key="support.ex.sub">Lorem ipsum dolor sit amet.</p>
+      <div class="accordion" id="exerciseList"></div>
+    </section>
+
+    <section class="survey-box" data-survey>
+      <p data-pv-key="support.survey.q">¿Esta sección te resultó útil?</p>
+      <div class="sv-btns">
+        <button type="button" data-sv="yes"><span class="material-symbols-rounded" aria-hidden="true">thumb_up</span> Sí</button>
+        <button type="button" data-sv="no"><span class="material-symbols-rounded" aria-hidden="true">thumb_down</span> No</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span data-pv-key="site.footer.left">Lorem ipsum dolor sit amet.</span>
+    <span><a href="sobreNosotros.html">Sobre nosotros</a> · <a href="terminosCondiciones.html">Términos y privacidad</a></span>
+  </footer>
+
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/soporte.js"></script>
+</body>
+</html>

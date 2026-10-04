@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+server/data/
+uploads/
+out/
+node_modules/
+docs/
+scripts/generate-docs.js
+server.log
+*.log
+.git/
+.vercel/

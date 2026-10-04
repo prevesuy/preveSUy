@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PREVESUY | Acceso restringido</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/assets/img/logo.png">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="gate-body">
+  <main class="gate-card">
+    <div class="brand center">
+      <img class="brand-logo" src="/assets/img/logo.png" alt="Logo de PreveSUy">
+      <span class="brand-name">PreveSUy</span>
+    </div>
+    <h1>Acceso restringido</h1>
+    <p class="muted">Ingresá el PIN de administración para continuar.</p>
+
+    <form id="pinForm" autocomplete="off">
+      <div class="pin-boxes" id="pinBoxes">
+        <input type="password" inputmode="numeric" maxlength="1" aria-label="Dígito 1">
+        <input type="password" inputmode="numeric" maxlength="1" aria-label="Dígito 2">
+        <input type="password" inputmode="numeric" maxlength="1" aria-label="Dígito 3">
+        <input type="password" inputmode="numeric" maxlength="1" aria-label="Dígito 4">
+      </div>
+      <p class="form-error" id="pinError" role="alert" hidden></p>
+      <button type="submit" class="btn primary block">Ingresar</button>
+    </form>
+    <p class="muted tiny">Área exclusiva para el equipo administrador.</p>
+  </main>
+  <script src="gate.js"></script>
+</body>
+</html>

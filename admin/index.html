@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PREVESUY | Panel de administración</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/assets/img/logo.png">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <!-- ===== Login / Setup inicial ===== -->
+  <section id="loginView" class="gate-body" hidden>
+    <main class="gate-card">
+      <div class="brand center"><img class="brand-logo" src="/assets/img/logo.png" alt="Logo de PreveSUy"><span class="brand-name">PreveSUy</span></div>
+
+      <div id="loginBox">
+        <h1>Panel de administración</h1>
+        <p class="muted">Iniciá sesión con tu cuenta de administrador.</p>
+        <form id="loginForm" novalidate>
+        <label>Usuario o correo
+          <input type="text" id="loginEmail" autocomplete="username" required>
+        </label>
+        <span class="field-error" data-for="loginEmail" role="alert"></span>
+        <label>Contraseña
+          <input type="password" id="loginPass" autocomplete="current-password" required>
+        </label>
+        <span class="field-error" data-for="loginPass" role="alert"></span>
+        <p class="form-error" id="loginError" role="alert" hidden></p>
+        <button type="submit" class="btn primary block">Entrar</button>
+        <button type="button" class="btn link block" id="forgotLink">Olvidé mi contraseña</button>
+        </form>
+        <form id="forgotForm" hidden novalidate>
+          <label>Correo institucional
+            <input type="email" id="forgotEmail" required>
+          </label>
+          <span class="field-error" data-for="forgotEmail" role="alert"></span>
+          <p class="form-note" id="forgotMsg"></p>
+          <button type="submit" class="btn primary block">Enviar enlace de recuperación</button>
+        </form>
+      </div>
+    </main>
+  </section>
+
+  <!-- ===== Panel ===== -->
+  <div id="app" hidden>
+    <aside class="sidebar">
+      <div class="brand"><img class="brand-logo" src="/assets/img/logo.png" alt="Logo de PreveSUy"><span class="brand-name">PreveSUy</span><span class="admin-tag">admin</span></div>
+      <nav class="side-nav">
+        <button data-view="dashboard" class="active"><span class="material-symbols-rounded">dashboard</span> Panel</button>
+        <button data-view="contenido"><span class="material-symbols-rounded">publish</span> Publicar</button>
+        <button data-view="textos"><span class="material-symbols-rounded">edit_note</span> Textos</button>
+        <button data-view="sitio"><span class="material-symbols-rounded">web</span> Editor del sitio</button>
+        <button data-view="centros"><span class="material-symbols-rounded">location_on</span> Centros</button>
+        <button data-view="mensajes"><span class="material-symbols-rounded">mail</span> Mensajes <span class="badge" id="msgBadge" hidden></span></button>
+        <button data-view="usuarios"><span class="material-symbols-rounded">group</span> Usuarios</button>
+        <button data-view="auditoria"><span class="material-symbols-rounded">shield</span> Auditoría</button>
+        <button data-view="exportar"><span class="material-symbols-rounded">download</span> Exportar</button>
+      </nav>
+      <div class="side-foot">
+        <span id="whoami" class="muted tiny"></span>
+        <button id="logoutBtn" class="btn secondary block">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel-card" id="bootstrapBanner" hidden>
+        <strong>Configuración inicial:</strong> la plataforma aún no tiene administradores.
+        Creá el primero desde la sección <strong>Usuarios</strong>; a partir de ahí se exigirá inicio de sesión.
+      </div>
+      <!-- Dashboard -->
+      <section class="view" id="view-dashboard">
+        <h2>Panel general <span class="live-dot" id="liveDot" title="Tiempo real"></span></h2>
+        <div class="stat-grid" id="statCards"></div>
+        <div class="panel-card">
+          <h3>Eventos por día (últimos 14 días)</h3>
+          <div class="bar-chart" id="dayChart"></div>
+        </div>
+        <div class="panel-card">
+          <h3>Eventos por tipo</h3>
+          <div class="bar-chart horizontal" id="eventChart"></div>
+        </div>
+      </section>
+
+      <!-- Editor visual del sitio (vista de usuario en vivo) -->
+      <section class="view" id="view-sitio" hidden>
+        <div class="view-head">
+          <h2>Editor del sitio</h2>
+        </div>
+        <div class="editor-toolbar">
+          <select id="sitePageSel" aria-label="Página a editar">
+            <option value="/index.html">Inicio</option>
+            <option value="/public/herramientas.html">Herramientas</option>
+            <option value="/public/novedades.html">Novedades</option>
+            <option value="/public/contactos.html">Contacto</option>
+            <option value="/public/soporteAyuda.html">Apoyo</option>
+            <option value="/public/sobreNosotros.html">Sobre nosotros</option>
+            <option value="/public/terminosCondiciones.html">Términos</option>
+          </select>
+          <button class="btn secondary" id="editToggleBtn"><span class="material-symbols-rounded">edit</span> Activar edición</button>
+          <button class="btn primary" id="siteSaveBtn" disabled>Publicar cambios</button>
+          <button class="btn secondary" id="siteDiscardBtn" disabled>Descartar</button>
+          <span class="muted tiny" id="siteEditStatus">Vista de solo lectura</span>
+        </div>
+        <p class="muted tiny editor-hint" id="editorHint" hidden>
+          Editá textos haciendo clic sobre ellos (borde azul). Clic en una tarjeta de contenido (borde naranja) para abrir su editor. Los cambios se ven en vivo al publicar.
+        </p>
+        <iframe id="siteFrame" class="preview-frame" title="Vista del sitio público"></iframe>
+      </section>
+
+      <!-- Textos del sitio: edita TODOS los títulos, textos y slogans -->
+      <section class="view" id="view-textos" hidden>
+        <div class="view-head">
+          <h2>Textos del sitio</h2>
+          <button class="btn primary" id="textsSaveBtn" disabled>Publicar cambios</button>
+        </div>
+        <p class="muted">Todos los textos que ve el usuario. Dejá un campo vacío para restaurar el valor original.</p>
+        <div class="texts-scan">
+          <button class="btn secondary small" id="textsReloadBtn"><span class="material-symbols-rounded">refresh</span> Escanear páginas</button>
+          <span class="muted tiny" id="textsStatus">Sin cargar</span>
+        </div>
+        <div id="textsGroups"></div>
+      </section>
+
+      <!-- Publicar: noticias, material de ayuda y todo el contenido -->
+      <section class="view" id="view-contenido" hidden>
+        <div class="view-head">
+          <h2>Publicar</h2>
+          <button class="btn primary" id="newContentBtn"><span class="material-symbols-rounded">add</span> Nuevo contenido</button>
+        </div>
+        <p class="muted">Noticias, material de ayuda, guías, videos y ejercicios que se publican en el sitio.</p>
+        <div class="toolbar-inline">
+          <input type="search" id="contentSearch" placeholder="Buscar por título o texto...">
+          <select id="filterType">
+            <option value="">Todos los tipos</option>
+            <option value="noticia">Noticia</option><option value="aviso">Aviso</option>
+            <option value="articulo">Artículo</option><option value="campana">Campaña</option>
+            <option value="linea">Línea de ayuda</option><option value="guia">Guía</option>
+            <option value="video">Video</option><option value="contacto">Contacto institucional</option>
+            <option value="educativo">Educativo</option><option value="ejercicio">Ejercicio</option>
+          </select>
+          <select id="filterStatus">
+            <option value="">Todos los estados</option>
+            <option value="published">Publicado</option>
+            <option value="draft">Borrador</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="contentTable">
+            <thead><tr><th>Título</th><th>Tipo</th><th>Edad</th><th>Estado</th><th>Actualizado</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Centros -->
+      <section class="view" id="view-centros" hidden>
+        <div class="view-head">
+          <h2>Centros de ayuda</h2>
+          <button class="btn primary" id="newCenterBtn">+ Nuevo centro</button>
+        </div>
+        <div class="table-wrap">
+          <table class="table" id="centerTable">
+            <thead><tr><th>Nombre</th><th>Dirección</th><th>Teléfono</th><th>Zona</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Mensajes -->
+      <section class="view" id="view-mensajes" hidden>
+        <h2>Mensajes de contacto</h2>
+        <div id="messageList" class="msg-list"></div>
+      </section>
+
+      <!-- Usuarios -->
+      <section class="view" id="view-usuarios" hidden>
+        <div class="view-head">
+          <h2>Administradores</h2>
+          <button class="btn primary" id="newAdminBtn">+ Nuevo administrador</button>
+        </div>
+        <p class="muted">El sistema requiere siempre al menos <strong>2 administradores</strong> activos.</p>
+        <div class="table-wrap">
+          <table class="table" id="adminTable">
+            <thead><tr><th>Usuario</th><th>Nombre</th><th>Correo</th><th>Estado</th><th>Alta</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Auditoría -->
+      <section class="view" id="view-auditoria" hidden>
+        <h2>Registro de auditoría</h2>
+        <p class="muted">Registro inmutable de todas las acciones administrativas.</p>
+        <div class="table-wrap">
+          <table class="table" id="auditTable">
+            <thead><tr><th>Fecha</th><th>Usuario</th><th>Acción</th><th>Objetivo</th><th>Detalle</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Exportar -->
+      <section class="view" id="view-exportar" hidden>
+        <h2>Exportar métricas</h2>
+        <div class="panel-card export-card">
+          <label>Desde <input type="date" id="expStart"></label>
+          <label>Hasta <input type="date" id="expEnd"></label>
+          <div class="row">
+            <button class="btn primary" id="expCsv">Descargar CSV</button>
+            <button class="btn secondary" id="expPdf">Descargar PDF</button>
+          </div>
+          <p class="muted tiny">Los reportes no contienen IPs ni datos personales (métricas anonimizadas).</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===== Modal editor de contenido ===== -->
+  <div class="modal-overlay" id="editorModal" hidden>
+    <div class="modal wide">
+      <div class="modal-head">
+        <h3 id="editorTitle">Nuevo contenido</h3>
+        <span class="autosave" id="autosaveTag" hidden>Guardado ✓</span>
+        <button class="icon-btn" data-close>&times;</button>
+      </div>
+      <form id="contentForm" novalidate>
+        <input type="hidden" id="cId">
+        <div class="form-grid">
+          <label class="span2">Título (máx. 120)
+            <input type="text" id="cTitle" maxlength="120" required>
+          </label>
+          <span class="field-error span2" data-for="cTitle" role="alert"></span>
+          <label>Tipo
+            <select id="cType">
+              <option value="noticia">Noticia</option><option value="aviso">Aviso</option>
+              <option value="articulo">Artículo</option><option value="campana">Campaña</option>
+              <option value="linea">Línea de ayuda</option><option value="guia">Guía</option>
+              <option value="video">Video</option><option value="contacto">Contacto institucional</option>
+              <option value="educativo">Educativo</option><option value="ejercicio">Ejercicio</option>
+            </select>
+          </label>
+          <label>Área
+            <select id="cArea">
+              <option value="salud_mental">Salud mental</option><option value="suicidio">Prevención del suicidio</option>
+              <option value="adicciones">Adicciones</option><option value="violencia">Violencia</option>
+              <option value="general">General</option>
+            </select>
+          </label>
+          <label>Edad
+            <select id="cAge">
+              <option value="todos">Todas</option><option value="ninos">Niños</option>
+              <option value="adolescentes">Adolescentes</option><option value="adultos">Adultos</option>
+            </select>
+          </label>
+          <label>Estado
+            <select id="cStatus"><option value="draft">Borrador</option><option value="published">Publicado</option></select>
+          </label>
+          <label class="span2">Etiquetas (máx. 5 — Enter para agregar)
+            <div class="tag-input" id="tagBox"><input type="text" id="cTagInput" placeholder="Escribí y pulsá Enter"></div>
+          </label>
+          <span class="field-error span2" data-for="cTagInput" role="alert"></span>
+          <label class="span2">Contenido
+            <textarea id="cBody" rows="7" placeholder="Texto del contenido..."></textarea>
+          </label>
+          <label class="span2">Enlace externo (opcional)
+            <input type="url" id="cLink" placeholder="https://...">
+          </label>
+          <div class="span2">
+            <span class="label-text">Imagen o video (PNG/JPG/WEBP/GIF máx. 3 MB · MP4/WEBM máx. 30 MB)</span>
+            <div class="upload-row">
+              <input type="file" id="cImageFile" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm">
+              <img id="cImagePreview" class="img-preview" alt="" hidden>
+              <video id="cVideoPreview" class="img-preview" controls muted hidden></video>
+              <button type="button" class="btn secondary small" id="cImageClear" hidden>Quitar</button>
+            </div>
+            <span class="field-error" data-for="cImageFile" role="alert"></span>
+          </div>
+        </div>
+        <p class="form-error" id="contentError" role="alert" hidden></p>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" data-close>Cancelar</button>
+          <button type="submit" class="btn primary">Guardar</button>
+          <button type="button" class="btn accent" id="publishBtn">Publicar ahora</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Modal centro ===== -->
+  <div class="modal-overlay" id="centerModal" hidden>
+    <div class="modal">
+      <div class="modal-head"><h3>Centro de ayuda</h3><button class="icon-btn" data-close>&times;</button></div>
+      <form id="centerForm" novalidate>
+        <input type="hidden" id="ceId">
+        <label>Nombre <input type="text" id="ceName" required></label>
+        <span class="field-error" data-for="ceName" role="alert"></span>
+        <label>Dirección <input type="text" id="ceAddress" required></label>
+        <span class="field-error" data-for="ceAddress" role="alert"></span>
+        <label>Teléfono <input type="text" id="cePhone" required></label>
+        <span class="field-error" data-for="cePhone" role="alert"></span>
+        <label>Zona / Departamento <input type="text" id="ceDept"></label>
+        <p class="form-error" id="centerError" role="alert" hidden></p>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" data-close>Cancelar</button>
+          <button type="submit" class="btn primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Modal admin ===== -->
+  <div class="modal-overlay" id="adminModal" hidden>
+    <div class="modal">
+      <div class="modal-head"><h3>Nuevo administrador</h3><button class="icon-btn" data-close>&times;</button></div>
+      <form id="adminForm" novalidate>
+        <label>Nombre <input type="text" id="aName" required></label>
+        <span class="field-error" data-for="aName" role="alert"></span>
+        <label>Nombre de usuario <input type="text" id="aUser" autocomplete="off" required></label>
+        <span class="field-error" data-for="aUser" role="alert"></span>
+        <label>Correo <input type="email" id="aEmail" required></label>
+        <span class="field-error" data-for="aEmail" role="alert"></span>
+        <label>Contraseña (mín. 8) <input type="password" id="aPass" required></label>
+        <span class="field-error" data-for="aPass" role="alert"></span>
+        <p class="form-error" id="adminError" role="alert" hidden></p>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" data-close>Cancelar</button>
+          <button type="submit" class="btn primary">Crear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Modal código de seguridad (acciones sensibles) ===== -->
+  <div class="modal-overlay" id="pinModal" hidden>
+    <div class="modal">
+      <div class="modal-head"><h3>Código de seguridad</h3><button class="icon-btn" data-close>&times;</button></div>
+      <p class="muted">Esta acción es sensible. Ingresá el PIN de administración para confirmar.</p>
+      <form id="pinFormModal" novalidate>
+        <label>PIN
+          <input type="password" id="pinValue" inputmode="numeric" maxlength="4" autocomplete="off" required>
+        </label>
+        <p class="form-error" id="pinError" role="alert" hidden></p>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" data-close>Cancelar</button>
+          <button type="submit" class="btn primary">Confirmar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

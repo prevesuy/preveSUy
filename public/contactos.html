@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PREVESUY | Contacto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=block" rel="stylesheet">
+  <link rel="icon" type="image/png" href="../assets/img/logo.png">
+  <link rel="stylesheet" href="../assets/css/global.css">
+</head>
+<body data-page="contactos">
+  <div class="topbar">
+    <span class="slogan" role="banner" data-pv-key="site.slogan">Pedir ayuda no está mal</span>
+    <div class="a11y">
+      <button id="btnFontMinus" type="button" aria-label="Reducir tamaño de letra"><span class="material-symbols-rounded" aria-hidden="true">text_decrease</span></button>
+      <button id="btnFontPlus" type="button" aria-label="Aumentar tamaño de letra"><span class="material-symbols-rounded" aria-hidden="true">text_increase</span></button>
+      <button id="btnContrast" type="button" aria-pressed="false" aria-label="Activar alto contraste"><span class="material-symbols-rounded" aria-hidden="true">contrast</span></button>
+    </div>
+  </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="brand"><img class="brand-logo" src="../assets/img/logo.png" alt="Logo de PreveSUy"><span class="brand-name">PreveSUy</span></a>
+      <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"><span class="material-symbols-rounded" aria-hidden="true">menu</span></button>
+      <nav class="site-nav">
+        <a href="../index.html">Inicio</a>
+        <a href="herramientas.html">Herramientas</a>
+        <a href="novedades.html">Novedades</a>
+        <a href="soporteAyuda.html">Apoyo</a>
+        <a href="contactos.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="page-hero">
+      <span class="eyebrow" data-pv-key="contact.hero.eyebrow">Lorem ipsum</span>
+      <h1 data-pv-key="contact.hero.title">Lorem ipsum dolor sit amet</h1>
+      <p data-pv-key="contact.hero.sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </section>
+
+    <section class="contact-grid">
+      <article class="panel">
+        <h2 data-pv-key="contact.form.title">Lorem ipsum</h2>
+        <form id="contactForm" novalidate>
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="name" type="text" placeholder="Tu nombre" required>
+            <span class="field-error" data-for="nombre" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="correo">Correo electrónico</label>
+            <input id="correo" name="email" type="email" placeholder="nombre@ejemplo.com" required>
+            <span class="field-error" data-for="correo" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="message" rows="5" placeholder="Escribí tu consulta..." required></textarea>
+            <span class="field-error" data-for="mensaje" role="alert"></span>
+          </div>
+          <p class="form-status" id="formStatus" role="status"></p>
+          <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+        </form>
+        <p class="muted tiny" data-pv-key="contact.form.note">Lorem ipsum dolor sit amet.</p>
+      </article>
+
+      <article class="panel">
+        <h2 data-pv-key="contact.centers.title">Lorem ipsum</h2>
+        <input type="search" id="centerSearch" class="field-input" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 13px;font:inherit;background:var(--bg);color:var(--ink);margin-bottom:6px" placeholder="Buscar centro...">
+        <div class="centers-grid" id="centersGrid"></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span data-pv-key="site.footer.left">Lorem ipsum dolor sit amet.</span>
+    <span><a href="sobreNosotros.html">Sobre nosotros</a> · <a href="terminosCondiciones.html">Términos y privacidad</a></span>
+  </footer>
+
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/contactos.js"></script>
+</body>
+</html>
