@@ -24,6 +24,15 @@ export function buildPdf(
     white: [1, 1, 1],
   };
 
+  const eventNames = {
+    page_view: 'Visitas a la página',
+    emergency_click: 'Clics a emergencia',
+    favorite: 'Favorito',
+    survey_useful_yes: 'Encuesta útil (sí)',
+    exercise_view: 'Ejercicio visto',
+    survey_useful_no: 'Encuesta útil (no)',
+  };
+
   const objects = [];
 
   const addObject = (value) => {
@@ -789,7 +798,7 @@ export function buildPdf(
 
       drawText(
         commands,
-        item.event,
+        eventNames[item.event] || item.event,
         MARGIN + dateWidth + 8,
         y - 19,
         eventWidth - 16,
