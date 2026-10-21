@@ -237,27 +237,6 @@ textarea { resize: vertical; }
   border-radius: var(--radius); background: var(--white);
 }
 
-/* ---------- Vista Textos (edición de todos los textos del sitio) ---------- */
-.texts-scan { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
-.texts-group {
-  background: var(--white); border: 1px solid var(--line);
-  border-radius: var(--radius); padding: 18px; margin-bottom: 14px;
-}
-.texts-group h3 {
-  margin: 0 0 12px; font-size: .82rem; text-transform: uppercase;
-  letter-spacing: .07em; color: var(--muted);
-}
-.texts-item { display: grid; gap: 4px; margin-bottom: 12px; }
-.texts-item:last-child { margin-bottom: 0; }
-.texts-item .k {
-  font-size: .72rem; font-weight: 800; color: var(--sky-2);
-  font-family: ui-monospace, monospace;
-}
-.texts-item input, .texts-item textarea {
-  width: 100%; font-size: .9rem; padding: 9px 12px;
-}
-.texts-item textarea { min-height: 64px; }
-
 /* ---------- Toast ---------- */
 .toast {
   position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);

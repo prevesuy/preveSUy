@@ -646,94 +646,6 @@
   // Carga inicial del iframe según el entorno
   frame.src = previewUrl($('#sitePageSel').value || '/index.html');
 
-  /* ---------- Vista "Textos": edita TODOS los textos/títulos/slogans ---------- */
-  const SITE_PAGES = [
-    ['Inicio', '/index.html'],
-    ['Herramientas', '/public/herramientas.html'],
-    ['Novedades', '/public/novedades.html'],
-    ['Contacto', '/public/contactos.html'],
-    ['Apoyo', '/public/soporteAyuda.html'],
-    ['Sobre nosotros', '/public/sobreNosotros.html'],
-    ['Términos', '/public/terminosCondiciones.html'],
-  ];
-  let textsDefs = []; // [{key, def, page}]
-  let textsDirty = false;
-
-  const scanPageForKeys = (page) => new Promise((resolve) => {
-    const fr = document.createElement('iframe');
-    fr.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none';
-    fr.src = previewUrl(page);
-    const done = (items) => { fr.remove(); resolve(items); };
-    const tm = setTimeout(() => done([]), 8000);
-    fr.addEventListener('load', () => {
-      setTimeout(() => {
-        clearTimeout(tm);
-        try {
-          const doc = fr.contentDocument;
-          const keys = new Map();
-          doc.querySelectorAll('[data-pv-key]').forEach((el) => {
-            const k = el.dataset.pvKey;
-            if (!keys.has(k)) keys.set(k, el.dataset.pvDef || el.textContent || '');
-          });
-          doc.querySelectorAll('[data-pv-src]').forEach((el) => {
-            const k = el.dataset.pvSrc;
-            if (!keys.has(k)) keys.set(k, el.dataset.pvDef || el.getAttribute('src') || '');
-          });
-          done([...keys.entries()].map(([key, def]) => ({ key, def, page })));
-        } catch { done([]); }
-      }, 400); // esperar a que site.js aplique textos
-    });
-    document.body.appendChild(fr);
-  });
-
-  async function loadTextsView() {
-    const status = $('#textsStatus');
-    status.textContent = 'Escaneando páginas del sitio...';
-    $('#textsGroups').innerHTML = '';
-    textsDefs = []; textsDirty = false;
-    $('#textsSaveBtn').disabled = true;
-    const { items: overrides } = await api('/api/site-texts');
-    for (const [label, page] of SITE_PAGES) {
-      const defs = await scanPageForKeys(page);
-      if (!defs.length) continue;
-      textsDefs.push(...defs);
-      const group = document.createElement('div');
-      group.className = 'texts-group';
-      group.innerHTML = `<h3>${esc(label)}</h3>` + defs.map(({ key, def }) => {
-        const val = overrides[key] ?? '';
-        const isMedia = /\.(img|src|media)$/.test(key);
-        const long = (def || '').length > 90;
-        return `<div class="texts-item">
-          <span class="k">${esc(key)}</span>
-          ${isMedia
-            ? `<input type="text" data-tkey="${esc(key)}" value="${esc(val)}" placeholder="URL de imagen/video subido" title="Original: ${esc(def)}">`
-            : long
-              ? `<textarea data-tkey="${esc(key)}" placeholder="${esc(def)}">${esc(val)}</textarea>`
-              : `<input type="text" data-tkey="${esc(key)}" value="${esc(val)}" placeholder="${esc(def)}">`}
-        </div>`;
-      }).join('');
-      $('#textsGroups').appendChild(group);
-    }
-    status.textContent = `${textsDefs.length} textos editables encontrados.`;
-  }
-
-  $('#textsGroups').addEventListener('input', () => { textsDirty = true; $('#textsSaveBtn').disabled = false; });
-  $('#textsReloadBtn').addEventListener('click', loadTextsView);
-  $('#textsSaveBtn').addEventListener('click', async () => {
-    const items = {};
-    $$('#textsGroups [data-tkey]').forEach((el) => {
-      const v = el.value.trim();
-      if (v) items[el.dataset.tkey] = v;
-      else items[el.dataset.tkey] = ''; // vacío → restaura el texto original
-    });
-    try {
-      const r = await api('/api/site-texts', { method: 'PUT', body: JSON.stringify({ items }) });
-      textsDirty = false;
-      $('#textsSaveBtn').disabled = true;
-      toast(`${r.updated} texto(s) publicados en vivo.`);
-    } catch (err) { toast(err.message); }
-  });
-
   frame.addEventListener('load', () => {
     if (editMode) decorate(frameDoc());
     markStatus();
@@ -756,7 +668,7 @@
   const loaders = {
     dashboard: loadDashboard, contenido: loadContents, centros: loadCenters,
     mensajes: loadMessages, usuarios: loadAdmins, auditoria: loadAudit,
-    exportar: () => {}, sitio: () => { markStatus(); }, textos: loadTextsView,
+    exportar: () => {}, sitio: () => { markStatus(); },
   };
 
   async function init() {

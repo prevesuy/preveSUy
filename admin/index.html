@@ -52,7 +52,6 @@
       <nav class="side-nav">
         <button data-view="dashboard" class="active"><span class="material-symbols-rounded">dashboard</span> Panel</button>
         <button data-view="contenido"><span class="material-symbols-rounded">publish</span> Publicar</button>
-        <button data-view="textos"><span class="material-symbols-rounded">edit_note</span> Textos</button>
         <button data-view="sitio"><span class="material-symbols-rounded">web</span> Editor del sitio</button>
         <button data-view="centros"><span class="material-symbols-rounded">location_on</span> Centros</button>
         <button data-view="mensajes"><span class="material-symbols-rounded">mail</span> Mensajes <span class="badge" id="msgBadge" hidden></span></button>
@@ -109,20 +108,6 @@
           Editá textos haciendo clic sobre ellos (borde azul). Clic en una tarjeta de contenido (borde naranja) para abrir su editor. Los cambios se ven en vivo al publicar.
         </p>
         <iframe id="siteFrame" class="preview-frame" title="Vista del sitio público"></iframe>
-      </section>
-
-      <!-- Textos del sitio: edita TODOS los títulos, textos y slogans -->
-      <section class="view" id="view-textos" hidden>
-        <div class="view-head">
-          <h2>Textos del sitio</h2>
-          <button class="btn primary" id="textsSaveBtn" disabled>Publicar cambios</button>
-        </div>
-        <p class="muted">Todos los textos que ve el usuario. Dejá un campo vacío para restaurar el valor original.</p>
-        <div class="texts-scan">
-          <button class="btn secondary small" id="textsReloadBtn"><span class="material-symbols-rounded">refresh</span> Escanear páginas</button>
-          <span class="muted tiny" id="textsStatus">Sin cargar</span>
-        </div>
-        <div id="textsGroups"></div>
       </section>
 
       <!-- Publicar: noticias, material de ayuda y todo el contenido -->

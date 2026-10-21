@@ -217,34 +217,13 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Config + botón de emergencia ---------- */
   const buildFab = (cfg) => {
     if (document.querySelector('.emergency-fab')) return;
-    const fab = document.createElement('button');
+    const fab = document.createElement('a');
     fab.className = 'emergency-fab';
-    fab.setAttribute('aria-label', 'Ayuda inmediata: abrir líneas de emergencia');
+    fab.href = 'tel:08000767';
+    fab.setAttribute('aria-label', 'Ayuda inmediata: llamar al 0800 0767');
     fab.innerHTML = `${icon('emergency')} <span data-pv-key="site.fab">Ayuda inmediata</span>`;
+    fab.addEventListener('click', () => track('emergency_click', document.body.dataset.page || ''));
     document.body.appendChild(fab);
-
-    let panel;
-    const openPanel = () => {
-      if (panel) { panel.remove(); panel = null; return; }
-      panel = document.createElement('div');
-      panel.className = 'emergency-panel';
-      panel.setAttribute('role', 'dialog');
-      panel.setAttribute('aria-label', 'Líneas de ayuda inmediata');
-      const secondary = (cfg.phonesSecondary || []).map((p) =>
-        `<div class="line"><div><strong>${esc(p.label)}</strong><br><small>Línea de apoyo</small></div><a href="tel:${esc(String(p.number).replace(/\s/g, ''))}">${esc(p.number)}</a></div>`
-      ).join('');
-      panel.innerHTML = `
-        <button class="close" aria-label="Cerrar">${icon('close')}</button>
-        <h3>Líneas de ayuda inmediata</h3>
-        <p class="sub">${esc(cfg.phonePrimaryDesc || 'Atención gratuita y confidencial')}</p>
-        <div class="line primary"><div><strong>Línea principal</strong><br><small>${esc(cfg.phonePrimaryDesc || '')}</small></div>
-          <a href="tel:${esc(String(cfg.phonePrimary || '0800 0777').replace(/\s/g, ''))}">${esc(cfg.phonePrimary || '0800 0777')}</a></div>
-        ${secondary}`;
-      panel.querySelector('.close').addEventListener('click', () => { panel.remove(); panel = null; });
-      document.body.appendChild(panel);
-      track('emergency_click', document.body.dataset.page || '');
-    };
-    fab.addEventListener('click', openPanel);
   };
 
   const loadConfig = () => fetch(`${API}/api/config`).then((r) => r.json()).then((cfg) => {
